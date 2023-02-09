@@ -22,11 +22,13 @@ public class LinkedListDeque<T> {
     }
     private Node sentinel;
     private int size;
+    private Node recursive;
     public LinkedListDeque() {
         sentinel = new Node();
         sentinel.prev = sentinel;
         sentinel.next = sentinel;
         size = 0;
+        recursive = null;
     }
 
     public void addFirst(T item) {
@@ -89,8 +91,8 @@ public class LinkedListDeque<T> {
         }
     }
 
-    public T getRecursive(int index) {
-        if (index <= 0 || index >= size) {
+    public T get(int index) {
+        if (index < 0 || index >= size) {
             return null;
         }
         else {
@@ -99,6 +101,24 @@ public class LinkedListDeque<T> {
                 node = sentinel.next;
             }
             return node.value;
+        }
+    }
+
+    public T getRecursive(int index) {
+        if (index < 0 || index >= size) {
+            return null;
+        }
+        if (recursive == null) {
+            recursive = sentinel;
+        }
+        recursive = recursive.next;
+        if (index == 0) {
+            T v = recursive.value;
+            recursive = null;
+            return v;
+        }
+        else {
+            return getRecursive(index--);
         }
     }
 

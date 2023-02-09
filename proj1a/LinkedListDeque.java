@@ -106,7 +106,8 @@ public class LinkedListDeque<T> {
             recursive = null;
             return v;
         } else {
-            return getRecursive(index--);
+            index--;
+            return getRecursive(index);
         }
     }
 

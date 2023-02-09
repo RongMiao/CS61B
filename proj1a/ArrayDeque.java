@@ -19,21 +19,27 @@ public class ArrayDeque<T> {
         data = tmp;
     }
 
-    private void checkSize() {
-        if (size * 1.25 < capacity || size + 1 >= capacity) {
+    private void checkRemoveSize() {
+        if (size * 1.25 < capacity && size >= 16) {
+            resize((int) (size * 1.25));
+        }
+    }
+
+    private void checkAddSize() {
+        if (size + 1 >= capacity) {
             resize((int) (size * 1.25));
         }
     }
 
     public void addFirst(T item) {
-        checkSize();
+        checkAddSize();
         System.arraycopy(data, 0, data, 1, size);
         data[0] = item;
         size++;
     }
 
     public void addLast(T item) {
-        checkSize();
+        checkAddSize();
         data[size] = item;
         size++;
     }
@@ -58,7 +64,7 @@ public class ArrayDeque<T> {
         }
         System.arraycopy(data, 1, data, 0, size - 1);
         size--;
-        checkSize();
+        checkRemoveSize();
         if (size == 0) {
             return null;
         } else {
@@ -71,7 +77,7 @@ public class ArrayDeque<T> {
             return null;
         }
         size--;
-        checkSize();
+        checkRemoveSize();
         if (size == 0) {
             return null;
         } else {

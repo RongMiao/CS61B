@@ -7,14 +7,14 @@ public class ArrayDeque<T> {
     private int size;
     private int capacity;
     public ArrayDeque() {
-        data = (T[])new Object[10];
+        data = (T[]) new Object[10];
         size = 0;
         capacity = 10;
     }
 
     private void resize(int s) {
         capacity = s;
-        T[] tmp = (T[])new Object[capacity];
+        T[] tmp = (T[]) new Object[capacity];
         System.arraycopy(data, 0, tmp, 0, size);
         data = tmp;
     }
@@ -56,13 +56,12 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
-        System.arraycopy(data, 1, data, 0, size-1);
+        System.arraycopy(data, 1, data, 0, size - 1);
         size--;
         checkSize();
         if (size == 0) {
             return null;
-        }
-        else {
+        } else {
             return data[0];
         }
     }
@@ -75,8 +74,7 @@ public class ArrayDeque<T> {
         checkSize();
         if (size == 0) {
             return null;
-        }
-        else {
+        } else {
             return data[size - 1];
         }
     }
@@ -84,8 +82,7 @@ public class ArrayDeque<T> {
     public T get(int index) {
         if (index < 0 || index >= size) {
             return null;
-        }
-        else {
+        } else {
             return data[index];
         }
     }

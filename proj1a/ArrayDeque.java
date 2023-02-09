@@ -20,8 +20,9 @@ public class ArrayDeque<T> {
     }
 
     private void checkSize() {
-        if (size * 1.25 < capacity || size + 1 >= capacity)
-            resize((int)(size * 1.25));
+        if (size * 1.25 < capacity || size + 1 >= capacity) {
+            resize((int) (size * 1.25));
+        }
     }
 
     public void addFirst(T item) {
@@ -46,38 +47,47 @@ public class ArrayDeque<T> {
     }
 
     public void printDeque() {
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < size; i++) {
             System.out.print(data[i] + " ");
+        }
     }
 
     public T removeFirst() {
-        if (size == 0)
+        if (size == 0) {
             return null;
+        }
         System.arraycopy(data, 1, data, 0, size-1);
         size--;
         checkSize();
-        if (size == 0)
+        if (size == 0) {
             return null;
-        else
+        }
+        else {
             return data[0];
+        }
     }
 
     public T removeLast() {
-        if (size == 0)
+        if (size == 0) {
             return null;
+        }
         size--;
         checkSize();
-        if (size == 0)
+        if (size == 0) {
             return null;
-        else
-            return data[size-1];
+        }
+        else {
+            return data[size - 1];
+        }
     }
 
     public T get(int index) {
-        if (index < 0 || index >= size)
+        if (index < 0 || index >= size) {
             return null;
-        else
+        }
+        else {
             return data[index];
+        }
     }
 
 

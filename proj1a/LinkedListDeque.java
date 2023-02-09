@@ -52,39 +52,47 @@ public class LinkedListDeque<T> {
     }
 
     public void printDeque() {
-        for (Node node = sentinel.next; node != sentinel; node = node.next)
+        for (Node node = sentinel.next; node != sentinel; node = node.next) {
             System.out.print(node.value + " ");
+        }
     }
 
     public T removeFirst() {
-        if (size == 0)
+        if (size == 0) {
             return null;
+        }
         Node tmp = sentinel.next;
         sentinel.next = tmp.next;
         sentinel.next.prev = sentinel;
         size--;
-        if (size == 0)
+        if (size == 0) {
             return null;
-        else
+        }
+        else {
             return sentinel.next.value;
+        }
     }
 
     public T removeLast() {
-        if (size == 0)
+        if (size == 0) {
             return null;
+        }
         Node tmp = sentinel.prev;
         sentinel.prev = tmp.prev;
         sentinel.prev.prev = sentinel;
         size--;
-        if (size == 0)
+        if (size == 0) {
             return null;
-        else
+        }
+        else {
             return sentinel.prev.value;
+        }
     }
 
-    public T get(int index) {
-        if (index <= 0 || index >= size)
+    public T getRecursive(int index) {
+        if (index <= 0 || index >= size) {
             return null;
+        }
         else {
             Node node = sentinel;
             for (int i = 0; i < index; i++) {

@@ -20,14 +20,14 @@ public class ArrayDeque<T> {
     }
 
     private void checkRemoveSize() {
-        if (size * 1.25 < capacity && size >= 16) {
-            resize((int) (size * 1.25));
+        if (size * 4 < capacity && size >= 16) {
+            resize((int) (capacity / 2));
         }
     }
 
     private void checkAddSize() {
         if (size + 1 >= capacity) {
-            resize((int) (size * 1.25));
+            resize((int) (size * 2));
         }
     }
 

@@ -39,9 +39,8 @@ public class ArrayDeque<T> {
             T[] tmp = (T[]) new Object[capacity];
             System.arraycopy(data, 0, tmp, 0, size);
             data = tmp;
-        } else {
-            data[size] = item;
         }
+        data[size] = item;
         size++;
     }
 
@@ -64,8 +63,8 @@ public class ArrayDeque<T> {
             return null;
         }
         T ret = data[0];
-        if (size * 1.5 < capacity && size >= 16) {
-            capacity = (int) (size * 1.5);
+        if (size * 2 < capacity && size >= 16) {
+            capacity = (int) (capacity / 2);
             T[] tmp = (T[]) new Object[capacity];
             System.arraycopy(data, 1, tmp, 0, size - 1);
             data = tmp;
@@ -81,13 +80,14 @@ public class ArrayDeque<T> {
             return null;
         }
         T ret = data[size - 1];
-        if (size * 1.5 < capacity && size >= 16) {
-            capacity = (int) (size * 1.5);
+        size--;
+        if (size * 2 < capacity && size >= 16) {
+            capacity = (int) (capacity / 2);
             T[] tmp = (T[]) new Object[capacity];
-            System.arraycopy(data, 0, tmp, 0, size - 1);
+            System.arraycopy(data, 0, tmp, 0, size);
             data = tmp;
         }
-        size--;
+
         return ret;
     }
 

@@ -12,35 +12,28 @@ public class ArrayDeque<T> {
         capacity = 10;
     }
 
-    private void resize(int s) {
-        capacity = s;
-        T[] tmp = (T[]) new Object[capacity];
-        System.arraycopy(data, 0, tmp, 0, size);
-        data = tmp;
-    }
-
-    private void checkRemoveSize() {
-        if (size * 4 < capacity && size >= 16) {
-            resize((int) (capacity / 2));
-        }
-    }
-
-    private void checkAddSize() {
-        if (size + 1 >= capacity) {
-            resize((int) (size * 2));
-        }
-    }
-
     public void addFirst(T item) {
-        checkAddSize();
-        System.arraycopy(data, 0, data, 1, size);
+        if (size + 1 >= capacity) {
+            capacity = (int) (size * 1.25);
+            T[] tmp = (T[]) new Object[capacity];
+            System.arraycopy(data, 0, tmp, 1, size);
+            data = tmp;
+        } else {
+            System.arraycopy(data, 0, data, 1, size);
+        }
         data[0] = item;
         size++;
     }
 
     public void addLast(T item) {
-        checkAddSize();
-        data[size] = item;
+        if (size + 1 >= capacity) {
+            capacity = (int) (size * 1.25);
+            T[] tmp = (T[]) new Object[capacity];
+            System.arraycopy(data, 0, tmp, 0, size);
+            data = tmp;
+        } else {
+            data[size] = item;
+        }
         size++;
     }
 
@@ -62,21 +55,32 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
-        T tmp = data[0];
-        System.arraycopy(data, 1, data, 0, size - 1);
+        T ret = data[0];
+        if (size * 1.25 < capacity && size >= 16) {
+            capacity = (int) (size * 1.25);
+            T[] tmp = (T[]) new Object[capacity];
+            System.arraycopy(data, 1, tmp, 0, size - 1);
+            data = tmp;
+        } else {
+            System.arraycopy(data, 1, data, 0, size - 1);
+        }
         size--;
-        checkRemoveSize();
-        return tmp;
+        return ret;
     }
 
     public T removeLast() {
         if (size == 0) {
             return null;
         }
-        T tmp = data[size-1];
+        T ret = data[0];
+        if (size * 1.25 < capacity && size >= 16) {
+            capacity = (int) (size * 1.25);
+            T[] tmp = (T[]) new Object[capacity];
+            System.arraycopy(data, 0, tmp, 0, size - 1);
+            data = tmp;
+        }
         size--;
-        checkRemoveSize();
-        return tmp;
+        return ret;
     }
 
     public T get(int index) {

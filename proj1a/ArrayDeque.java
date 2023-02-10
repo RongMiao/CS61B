@@ -52,10 +52,6 @@ public class ArrayDeque<T> {
         return size;
     }
 
-    public int getCapacity() {
-        return capacity;
-    }
-
     public void printDeque() {
         for (int i = 0; i < size; i++) {
             System.out.print(data[i] + " ");
@@ -66,27 +62,21 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
+        T tmp = data[0];
         System.arraycopy(data, 1, data, 0, size - 1);
         size--;
         checkRemoveSize();
-        if (size == 0) {
-            return null;
-        } else {
-            return data[0];
-        }
+        return tmp;
     }
 
     public T removeLast() {
         if (size == 0) {
             return null;
         }
+        T tmp = data[size-1];
         size--;
         checkRemoveSize();
-        if (size == 0) {
-            return null;
-        } else {
-            return data[size - 1];
-        }
+        return tmp;
     }
 
     public T get(int index) {

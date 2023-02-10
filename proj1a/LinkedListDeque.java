@@ -5,7 +5,7 @@
 
 public class LinkedListDeque<T> {
 
-    public class Node {
+    private class Node {
         public T value;
         public Node prev;
         public Node next;
@@ -85,7 +85,7 @@ public class LinkedListDeque<T> {
         if (index < 0 || index >= size) {
             return null;
         } else {
-            Node node = sentinel;
+            Node node = sentinel.next;
             for (int i = 0; i < index; i++) {
                 node = sentinel.next;
             }

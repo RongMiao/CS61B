@@ -7,14 +7,18 @@ public class ArrayDeque<T> {
     private int size;
     private int capacity;
     public ArrayDeque() {
-        data = (T[]) new Object[10];
+        data = (T[]) new Object[8];
         size = 0;
-        capacity = 10;
+        capacity = 8;
     }
 
     public void addFirst(T item) {
         if (size + 1 >= capacity) {
-            capacity = (int) (size * 1.25);
+            if (size <= 16) {
+                capacity = (int) (capacity * 1.25);
+            } else {
+                capacity = (int) (capacity * 1.5);
+            }
             T[] tmp = (T[]) new Object[capacity];
             System.arraycopy(data, 0, tmp, 1, size);
             data = tmp;
@@ -27,7 +31,11 @@ public class ArrayDeque<T> {
 
     public void addLast(T item) {
         if (size + 1 >= capacity) {
-            capacity = (int) (size * 1.25);
+            if (size <= 16) {
+                capacity = (int) (capacity * 1.25);
+            } else {
+                capacity = (int) (capacity * 1.5);
+            }
             T[] tmp = (T[]) new Object[capacity];
             System.arraycopy(data, 0, tmp, 0, size);
             data = tmp;
@@ -56,8 +64,8 @@ public class ArrayDeque<T> {
             return null;
         }
         T ret = data[0];
-        if (size * 1.25 < capacity && size >= 16) {
-            capacity = (int) (size * 1.25);
+        if (size * 1.5 < capacity && size >= 16) {
+            capacity = (int) (size * 1.5);
             T[] tmp = (T[]) new Object[capacity];
             System.arraycopy(data, 1, tmp, 0, size - 1);
             data = tmp;
@@ -72,9 +80,9 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
-        T ret = data[0];
-        if (size * 1.25 < capacity && size >= 16) {
-            capacity = (int) (size * 1.25);
+        T ret = data[size - 1];
+        if (size * 1.5 < capacity && size >= 16) {
+            capacity = (int) (size * 1.5);
             T[] tmp = (T[]) new Object[capacity];
             System.arraycopy(data, 0, tmp, 0, size - 1);
             data = tmp;

@@ -14,7 +14,7 @@ public class Palindrome {
     }
 
 
-    private boolean is_palindrome(Deque<Character> deque) {
+    private boolean isPalindrome(Deque<Character> deque) {
         if (deque.size() == 0 || deque.size() == 1) {
             return true;
         }
@@ -22,10 +22,10 @@ public class Palindrome {
         if (deque.removeFirst() != deque.removeLast()) {
             return false;
         }
-        return is_palindrome(deque);
+        return isPalindrome(deque);
     }
 
-    private boolean is_palindrome(Deque<Character> deque, CharacterComparator cc) {
+    private boolean isPalindrome(Deque<Character> deque, CharacterComparator cc) {
         if (deque.size() == 0 || deque.size() == 1) {
             return true;
         }
@@ -33,7 +33,7 @@ public class Palindrome {
         if (!cc.equalChars(deque.removeFirst(), deque.removeLast())) {
             return false;
         }
-        return is_palindrome(deque, cc);
+        return isPalindrome(deque, cc);
     }
 
     public boolean isPalindrome(String word) {
@@ -53,7 +53,7 @@ public class Palindrome {
         } else {
             return true;
         }*/
-        return is_palindrome(deque);
+        return isPalindrome(deque);
     }
 
     public boolean isPalindrome(String word, CharacterComparator cc) {
@@ -61,6 +61,6 @@ public class Palindrome {
             return true;
         }
         Deque deque = wordToDeque(word);
-        return is_palindrome(deque, cc);
+        return isPalindrome(deque, cc);
     }
 }

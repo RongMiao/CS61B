@@ -15,7 +15,7 @@ public class TestArrayDequeGold {
                 if (sequence.length() == 0) {
                     sequence += i;
                 } else {
-                    sequence = i + " " + sequence;
+                    sequence = sequence + " " + i;
                 }
             } else {
                 sad1.addFirst(i);
@@ -23,7 +23,7 @@ public class TestArrayDequeGold {
                 if (sequence.length() == 0) {
                     sequence += i;
                 } else {
-                    sequence = sequence + " " + i;
+                    sequence = i + " " + sequence;
                 }
             }
         }

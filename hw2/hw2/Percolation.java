@@ -16,7 +16,7 @@ public class Percolation {
     // create N-by-N grid, with all sites initially blocked
     public Percolation(int N) {
         if (N <= 0) {
-            throw new IndexOutOfBoundsException("invaild parameter, N = " + N);
+            throw new IllegalArgumentException("invaild parameter, N = " + N);
         }
         weightedQuickUnionUF = new WeightedQuickUnionUF(N * N + 2);
         weightedQuickUnionUF2 = new WeightedQuickUnionUF(N * N + 1);

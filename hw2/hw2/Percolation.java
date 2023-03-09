@@ -62,9 +62,9 @@ public class Percolation {
                 weightedQuickUnionUF.union(top, xyToIndex(row, col));
             }
             if (row == N - 1) {
-                if (isFull(row, col)) { // if item in last line is open and isfull, connect to virtual bottom
+                //if (isFull(row, col)) { // if item in last line is open and isfull, connect to virtual bottom
                     weightedQuickUnionUF.union(botton, xyToIndex(row, col));
-                }
+                //}
             }
         }
     }

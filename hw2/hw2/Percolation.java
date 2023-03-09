@@ -5,6 +5,7 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 public class Percolation {
 
     private WeightedQuickUnionUF weightedQuickUnionUF;
+    private WeightedQuickUnionUF weightedQuickUnionUF2;
     private boolean sites[][];
     private int N;
 
@@ -18,6 +19,7 @@ public class Percolation {
             throw new IndexOutOfBoundsException("invaild parameter, N = " + N);
         }
         weightedQuickUnionUF = new WeightedQuickUnionUF(N * N + 2);
+        weightedQuickUnionUF2 = new WeightedQuickUnionUF(N * N + 1);
         sites = new boolean[N][N];
         this.N = N;
         numberOfOpen = 0;
@@ -46,6 +48,7 @@ public class Percolation {
             return;
         }
         weightedQuickUnionUF.union(xyToIndex(row, col), xyToIndex(row2, col2));
+        weightedQuickUnionUF2.union(xyToIndex(row, col), xyToIndex(row2, col2));
     }
 
     // open the site (row, col) if it is not open already
@@ -60,6 +63,7 @@ public class Percolation {
             ++numberOfOpen;
             if (row == 0) {     // if item in first line is open, connect to virtual top
                 weightedQuickUnionUF.union(top, xyToIndex(row, col));
+                weightedQuickUnionUF2.union(top, xyToIndex(row, col));
             }
             if (row == N - 1) {
                 //if (isFull(row, col)) { // if item in last line is open and isfull, connect to virtual bottom
@@ -84,7 +88,7 @@ public class Percolation {
             }
         }
          */
-        return weightedQuickUnionUF.connected(top, xyToIndex(row, col));
+        return weightedQuickUnionUF2.connected(top, xyToIndex(row, col));
     }
 
     // number of open sites

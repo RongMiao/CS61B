@@ -2,18 +2,70 @@ package byog.Core;
 
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
+import edu.princeton.cs.introcs.StdDraw;
+
+import java.awt.*;
+import java.util.Random;
+
 
 public class Game {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
-    public static final int WIDTH = 80;
-    public static final int HEIGHT = 30;
 
+    private Player player;
+    Menu menu;
+
+    public Game() {
+        menu = new Menu();
+    }
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
      */
     public void playWithKeyboard() {
+        menu.showMenu();
+        char option = Utils.getOption();
+        if (option == 'n') {
+            Long seed = menu.getSeed();
+            start(seed);
+        } else if (option == 'l') {
+            System.out.println("load game");
+        } else if (option == 'q') {
+            System.out.println("quit");
+        }
     }
+
+    private void init(long seed) {
+        StdDraw.enableDoubleBuffering();
+        // create map
+        GameMap gameMap =  GameMap.create(seed, Utils.MAP_WIDTH, Utils.MAP_HEIGHT);
+        // create player
+        player = new Player(gameMap);
+    }
+
+    private void start(long seed) {
+        init(seed);
+        boolean isWin = false;
+        while (true) {
+            char c = Utils.getInput();
+            if (c == 'w' || c == 's' || c == 'a' || c == 'd') {
+                isWin = player.move(c);
+                if (isWin) {
+                    break;
+                }
+            } else if (c == 'q') {
+                break;
+            }
+        }
+        if (isWin) {
+            menu.showWin();
+        } else {
+            menu.showBreak();
+        }
+        // wait for quit
+        char c = Utils.getInput();
+        System.exit(0);
+    }
+
 
     /**
      * Method used for autograding and testing the game code. The input string will be a series

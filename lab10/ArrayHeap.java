@@ -215,16 +215,13 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         /* TODO: Your code here! */
         for (int i = 1; i < size; i++) {
             if (contents[i].myItem.equals(item)) {
-                contents[i].myPriority = priority;
-                int parentIndex = parentIndex(i);
-                if (parentIndex > 1) {
-                    if(min(parentIndex, i) == i) {
-                        swim(i);
-                    } else {
-                        sink(i);
-                    }
+                if (priority > contents[i].myPriority) {
+                    contents[i].myPriority = priority;
+                    sink(i);
+                } else {
+                    contents[i].myPriority = priority;
+                    swim(i);
                 }
-                break;
             }
         }
     }

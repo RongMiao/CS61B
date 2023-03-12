@@ -1,5 +1,6 @@
 package lab9;
 
+import java.security.Key;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -53,19 +54,49 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      */
     @Override
     public V get(K key) {
-        throw new UnsupportedOperationException();
+        if (key == null) {
+            throw new IllegalArgumentException("key is null");
+        }
+        int i = hash(key);
+        return buckets[i].get(key);
+    }
+
+    private void resize() {
+        ArrayMap<K, V>[] oldBuckets = this.buckets;
+        ArrayMap<K, V>[] newBuckets = new ArrayMap[buckets.length * 2];
+        this.buckets = newBuckets;
+        size = 0;
+        for (int i = 0; i < this.buckets.length; i += 1) {
+            this.buckets[i] = new ArrayMap<>();
+        }
+        for (int i = 0; i < oldBuckets.length; ++i) {
+            for (K k : oldBuckets[i]) {
+                put(k, oldBuckets[i].get(k));
+            }
+        }
     }
 
     /* Associates the specified value with the specified key in this map. */
     @Override
     public void put(K key, V value) {
-        throw new UnsupportedOperationException();
+        if (key == null) {
+            throw new IllegalArgumentException("key is null");
+        }
+        if (loadFactor() > MAX_LF) {
+            resize();
+        }
+
+        int i = hash(key);
+        if (!containsKey(key)) {
+            size++;
+        }
+        buckets[i].put(key, value);
     }
 
     /* Returns the number of key-value mappings in this map. */
     @Override
     public int size() {
-        throw new UnsupportedOperationException();
+        return size;
     }
 
     //////////////// EVERYTHING BELOW THIS LINE IS OPTIONAL ////////////////

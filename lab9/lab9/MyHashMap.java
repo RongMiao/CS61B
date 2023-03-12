@@ -70,7 +70,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         ArrayMap<K, V>[] oldBuckets = this.buckets;
         ArrayMap<K, V>[] newBuckets = new ArrayMap[size];
         this.buckets = newBuckets;
-        size = 0;
+        this.size = 0;
         for (int i = 0; i < this.buckets.length; i += 1) {
             this.buckets[i] = new ArrayMap<>();
         }

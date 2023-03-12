@@ -1,6 +1,9 @@
 package lab9;
 
+import edu.princeton.cs.algs4.SET;
+
 import java.security.Key;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -24,6 +27,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
     public MyHashMap() {
         buckets = new ArrayMap[DEFAULT_SIZE];
+        keySet = new HashSet<>();
         this.clear();
     }
 
@@ -34,6 +38,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         for (int i = 0; i < this.buckets.length; i += 1) {
             this.buckets[i] = new ArrayMap<>();
         }
+        keySet.clear();
     }
 
     /** Computes the hash function of the given key. Consists of
@@ -61,9 +66,9 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         return buckets[i].get(key);
     }
 
-    private void resize() {
+    private void resize(int size) {
         ArrayMap<K, V>[] oldBuckets = this.buckets;
-        ArrayMap<K, V>[] newBuckets = new ArrayMap[buckets.length * 2];
+        ArrayMap<K, V>[] newBuckets = new ArrayMap[size];
         this.buckets = newBuckets;
         size = 0;
         for (int i = 0; i < this.buckets.length; i += 1) {
@@ -83,7 +88,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
             throw new IllegalArgumentException("key is null");
         }
         if (loadFactor() > MAX_LF) {
-            resize();
+            resize(2* buckets.length);
         }
 
         int i = hash(key);
@@ -100,11 +105,11 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     }
 
     //////////////// EVERYTHING BELOW THIS LINE IS OPTIONAL ////////////////
-
+    private Set<K> keySet;
     /* Returns a Set view of the keys contained in this map. */
     @Override
     public Set<K> keySet() {
-        throw new UnsupportedOperationException();
+        return keySet;
     }
 
     /* Removes the mapping for the specified key from this map if exists.
@@ -112,7 +117,15 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      * UnsupportedOperationException. */
     @Override
     public V remove(K key) {
-        throw new UnsupportedOperationException();
+        if (key == null) {
+            throw new IllegalArgumentException("key is null");
+        }
+        int i = hash(key);
+        if (!containsKey(key)) {
+            size--;
+        }
+        keySet.remove(key);
+        return buckets[i].remove(key);
     }
 
     /* Removes the entry for the specified key only if it is currently mapped to
@@ -120,7 +133,15 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      * throw an UnsupportedOperationException.*/
     @Override
     public V remove(K key, V value) {
-        throw new UnsupportedOperationException();
+        if (key == null) {
+            throw new IllegalArgumentException("key is null");
+        }
+        int i = hash(key);
+        if (!containsKey(key)) {
+            size--;
+        }
+        keySet.remove(key);
+        return buckets[i].remove(key);
     }
 
     @Override
